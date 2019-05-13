@@ -1,0 +1,120 @@
+<mat-toolbar color="default">
+  <mat-card-title style="text-align: center">{{description}}</mat-card-title>
+  <span class="spacer"></span>
+</mat-toolbar>
+
+<mat-tab-group #tabs [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+  <mat-tab label="Tab 1">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2 class="section-title">Form #1</h2>
+          <form [formGroup]="tab1Form" (ngSubmit)="onSubmitForm1(tab1Form.value)">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Name" formControlName="name" (input)="onSearchChange1()" required>
+              <mat-error *ngFor="let validation of validation_messages.name">
+                <mat-error class="error-message" *ngIf="tab1Form.get('name').hasError(validation.type) && (tab1Form.get('name').dirty || tab1Form.get('name').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="picker" placeholder="Birthday" formControlName="calender" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngFor="let validation of validation_messages.calender">
+                    <mat-error class="error-message" *ngIf="tab1Form.get('calender').hasError(validation.type) && (tab1Form.get('calender').dirty || tab1Form.get('calender').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input matInput type="email" placeholder="Email" formControlName="email" (input)="onSearchChange1()" required>
+              <mat-error *ngFor="let validation of validation_messages.email">
+                <mat-error class="error-message" *ngIf="tab1Form.get('email').hasError(validation.type) && (tab1Form.get('email').dirty || tab1Form.get('email').touched)">
+                  {{validation.message}}
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Phone" type="tel" formControlName="phone" (input)="onSearchChange1()" required>
+              <mat-error *ngFor="let validation of validation_messages.phone">
+                <mat-error class="error-message" *ngIf="tab1Form.get('phone').hasError(validation.type) && (tab1Form.get('phone').dirty || tab1Form.get('phone').touched)">
+                  {{ validation.message }}
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!tab1Form.valid">
+              Submit
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Tab 2">
+    <div class="container">
+      <div class="row">
+
+        <div class="col">
+          <h2 class="section-title">Form #2</h2>
+
+          <form [formGroup]="tab2Form" novalidate (ngSubmit)="onSubmitForm2(tab2Form.value)">
+
+            <mat-form-field class="full-width">
+              <input matInput type="text" placeholder="Address1" formControlName="address1" (input)="onSearchChange2()" required>
+              <mat-error *ngFor="let validation of account_validation_messages.address1">
+                <mat-error class="error-message" *ngIf="tab2Form.get('address1').hasError(validation.type) && (tab2Form.get('address1').dirty || tab2Form.get('address1').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input matInput type="text" placeholder="Address2" formControlName="address2" (input)="onSearchChange2()" required>
+              <mat-error *ngFor="let validation of account_validation_messages.address2">
+                <mat-error class="error-message" *ngIf="tab2Form.get('address2').hasError(validation.type) && (tab2Form.get('address2').dirty || tab2Form.get('address2').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input matInput type="text" placeholder="City" formControlName="city" (input)="onSearchChange2()" required>
+              <mat-error *ngFor="let validation of account_validation_messages.city">
+                <mat-error class="error-message" *ngIf="tab2Form.get('city').hasError(validation.type) && (tab2Form.get('city').dirty || tab2Form.get('city').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Province" formControlName="province" required>
+              <mat-error *ngFor="let validation of account_validation_messages.province">
+                <mat-error class="error-message" *ngIf="tab2Form.get('province').hasError(validation.type) && (tab2Form.get('province').dirty || tab2Form.get('province').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <div formGroupName="country" class="row">
+              <mat-form-field class="full-width" style="margin: 0 12px">
+                <mat-select formControlName="country" placeholder="Country">
+                  <mat-option *ngFor="let country of countries" [value]="country">
+                    {{ country.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Postal code" formControlName="postal" required>
+              <mat-error *ngFor="let validation of account_validation_messages.postal">
+                <mat-error class="error-message" *ngIf="tab2Form.get('postal').hasError(validation.type) && (tab2Form.get('postal').dirty || tab2Form.get('postal').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!tab2Form.valid">
+              Submit
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
